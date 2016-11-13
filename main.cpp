@@ -59,9 +59,8 @@ int main(int argc, char * argv[]) {
     vector<int> factors;
     string message = calculate_frequency(frequency);
 
-    cout << endl << message << endl << endl;
-    
     for(int i = 1; i <= message.size(); i++) {
+        if(message[i - 1] == '\n') message[i - 1] = ';';
         if(message.size() % i == 0) {
             if(i >= 4) {
                 cout << i << " ";
@@ -70,6 +69,8 @@ int main(int argc, char * argv[]) {
         }
     }
     cout << endl;
+
+    cout << endl << message << endl << endl;
     
     return 0;
 }
