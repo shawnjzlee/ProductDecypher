@@ -33,8 +33,8 @@ void output_frequency(int total, int f[]){
 }
 
 void decode(string message){
-    char table[31] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
-    'n','o','p','q','r','s','t','u','v','w','x','y','z',' ',',','!','.','\n'};
+    char table[31] = {'p','t','e','h','f','g','.','a','m','b','r','c',' ',
+    'i','s','!','k','x','q','u','l','w','d','v','n','z',',','j','o','y','\n'};
 
     for(int i = 0; i < message.size(); i++) {
         message.at(i) = table[frequency_counter(message.substr(i,1))];
