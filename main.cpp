@@ -16,14 +16,12 @@ using namespace std;
  const string LOWERCASE[31] = {"a","b","c","d","e","f","g","h","i","j","k","l","m",
     "n","o","p","q","r","s","t","u","v","w","x","y","z"," ",",","!",".","\n"};
 
-//Get the char and return the int value
 int frequency_counter(string s){
     for(int i = 0; i < 31; i++) 
         if(s == UPPERCASE[i] || s == LOWERCASE[i]) return i;
     return -1;
 }
 
-//Output the analysis of the letter frequency
 void output_frequency(int total, int f[]){
 
     string table[31] = {"A","B","C","D","E","F","G","H","I","J","K","L","M",
@@ -32,6 +30,18 @@ void output_frequency(int total, int f[]){
     for(int i = 0; i < 31; i++)
         cout << table[i] << ": " << ((double)f[i]/total) * 100 
              << "% \t, " << f[i] << "/" << total << endl;
+}
+
+void decode(string message){
+    char table[31] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+    'n','o','p','q','r','s','t','u','v','w','x','y','z',' ',',','!','.','\n'};
+
+    for(int i = 0; i < message.size(); i++) {
+        message.at(i) = table[frequency_counter(message.substr(i,1))];
+    }
+    
+    cout << "Decoded Message:\n";
+    cout << message << endl;
 }
 
 void print_matrix (vector<vector<string>> matrix) {
@@ -50,19 +60,19 @@ void swap_rows(vector<vector<string>> &matrix) {
     vector<string> &v3 = matrix[3];
 
     v0.swap(v1);
-    v0.swap(v2);
-    v0.swap(v3);
+    v1.swap(v2);
+    v2.swap(v3);
     
     cout << "Swapped rows\n";
     print_matrix(matrix);
 }
 
-string reverse_transpose(vector<vector<string>> matrix_transposed, int row, int column) {
+string reverse_transpose(vector<vector<string>> matrix, int row, int column) {
     string message;
     
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {
-            message.append(matrix_transposed.at(j).at(i));
+            message.append(matrix.at(j).at(i));
         }
     }
     
@@ -72,38 +82,23 @@ string reverse_transpose(vector<vector<string>> matrix_transposed, int row, int 
     return message;
 }
 
-string transpose_matrix(vector<vector<string>> matrix, int row, int column) {
-    vector<vector<string>> matrix_transposed(column, vector<string>(row));
-    
-    for (int i = 0; i < column; i++) {
-        for (int j = 0; j < row; j++) {
-            matrix_transposed.at(i).at(j) = matrix.at(j).at(i);
-        }
-    }
-    
-    cout << "Transposing matrix with columns as rows:\n";
-    print_matrix(matrix_transposed);
-    
-    swap_rows(matrix_transposed);
-    
-    return reverse_transpose(matrix_transposed, row, column);
-}
-
 string fill_matrix (string &message, vector<int> factors) {
     int column = factors.at(0);
     
     int row = message.size() / column;
     
-    vector<vector<string>> matrix(row, vector<string>(column));
+    vector<vector<string>> matrix(column, vector<string>(row));
     
-    for(int i = 0, str_index = 0; i < row; i++) {
-        for (int j = 0; j < column; j++, str_index++) {
+    for(int i = 0, str_index = 0; i < column; i++) {
+        for (int j = 0; j < row; j++, str_index++) {
             matrix.at(i).at(j) = message[str_index];
         }
     }
     
-    // print_matrix(matrix);
-    return transpose_matrix(matrix, row, column);
+    print_matrix(matrix);
+    
+    swap_rows(matrix);
+    return reverse_transpose(matrix, row, column);
 }
 
 string calculate_frequency (int * frequency) {
@@ -154,6 +149,8 @@ int main(int argc, char * argv[]) {
     
     cout << "Output post-columnar transposition message:\n";
     cout << message << endl << endl;
+    
+    decode(message);
     
     return 0;
 }
