@@ -63,8 +63,8 @@ void swap_rows(vector<vector<string>> &matrix) {
     v1.swap(v2);
     v2.swap(v3);
     
-    cout << "Swapped rows\n";
-    print_matrix(matrix);
+    // cout << "Swapped rows\n";
+    // print_matrix(matrix);
 }
 
 string reverse_transpose(vector<vector<string>> matrix, int row, int column) {
@@ -76,8 +76,8 @@ string reverse_transpose(vector<vector<string>> matrix, int row, int column) {
         }
     }
     
-    cout << "Reverse from transposed to normal:\n";
-    cout << message << endl;
+    // cout << "Reverse from transposed to normal:\n";
+    // cout << message << endl;
     
     return message;
 }
@@ -95,7 +95,7 @@ string fill_matrix (string &message, vector<int> factors) {
         }
     }
     
-    print_matrix(matrix);
+    // print_matrix(matrix);
     
     swap_rows(matrix);
     return reverse_transpose(matrix, row, column);
@@ -147,8 +147,8 @@ int main(int argc, char * argv[]) {
         if (message[i] == ';') message[i] = '\n';
     }
     
-    cout << "Output post-columnar transposition message:\n";
-    cout << message << endl << endl;
+    // cout << "Output post-columnar transposition message:\n";
+    // cout << message << endl << endl;
     
     decode(message);
     
