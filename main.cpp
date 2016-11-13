@@ -34,6 +34,32 @@ void output_frequency(int total, int f[]){
              << "% \t, " << f[i] << "/" << total << endl;
 }
 
+void print_matrix (vector<vector<string>> matrix) {
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix.at(i).size(); j++) {
+            cout << matrix.at(i).at(j);
+        }
+        cout << endl;
+    }
+}
+
+void fill_matrix (string &message, vector<int> factors) {
+    for_each(factors.begin(), factors.begin()+1, [&](int &column) {
+        int row = message.size() / column;
+        
+        vector<vector<string>> matrix(row, vector<string>(column));
+        
+        for(int i = 0, str_index = 0; i < row; i++) {
+            for (int j = 0; j < column; j++, str_index++) {
+                matrix.at(i).at(j) = message[str_index];
+            }
+        }
+        
+        print_matrix(matrix);
+        
+    });
+}
+
 string calculate_frequency (int * frequency) {
     string line, message;
     ifstream infile("problem1.enc");
@@ -68,9 +94,10 @@ int main(int argc, char * argv[]) {
             }
         }
     }
-    cout << endl;
-
-    cout << endl << message << endl << endl;
+    
+    cout << endl << endl << message << endl << endl;
+    
+    fill_matrix(message, factors);
     
     return 0;
 }
